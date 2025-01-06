@@ -2,35 +2,34 @@ Yay, you found out the secrit location to download the sauce code from!
 
 Wii compile guide
 1. Setup devkitPro for the Wii
-2. Run sudo (dkp)-pacman --needed -S wii-cmake wii-portlibs ppc-portlibs /
+2. Run sudo (dkp)-pacman --needed -S wii-cmake wii-portlibs ppc-portlibs // I know it's ugly, proper dep list TBD
 3. Install ninja trough your system package manager 
 4. install https://github.com/AndrewPiroli/wii-curl 
 5. Run the command below
-cmake \
--B build \
--S . \
--D CMAKE_TOOLCHAIN_FILE=$DEVKITPRO/cmake/Wii.cmake \
--D FTE_ENGINE_SERVER_ONLY=OFF \
--D FTE_TOOL_HTTPSV=OFF \
--D FTE_TOOL_QTV=OFF \
--D FTE_TOOL_IQM=OFF \
--D FTE_TOOL_IMAGE=OFF \
--D FTE_TOOL_MASTER=OFF \
--D FTE_TOOL_QCC=OFF \
--D FTE_PLUG_ODE=OFF \
--D FTE_PLUG_HL2=OFF \
--D FTE_PLUG_COD=OFF \
--D FTE_PLUG_BULLET=OFF \
--D FTE_PLUG_QI=OFF \
--D FTE_PLUG_EZHUD=OFF \
--D FTE_PLUG_IRC=OFF \
--D FTE_PLUG_MODELS=OFF \
--D FTE_PLUG_XMPP=OFF \
--D FTE_PLUG_QUAKE3=OFF \
--D FTE_MENU_SYS=OFF \
--D FTE_CSADDON=OFF \
--G Ninja
-6. then run the following to compile
+  cmake -B build \
+        -S . \
+        -D CMAKE_TOOLCHAIN_FILE=$DEVKITPRO/cmake/Wii.cmake \
+        -D FTE_ENGINE_SERVER_ONLY=OFF \
+        -D FTE_TOOL_HTTPSV=OFF \
+        -D FTE_TOOL_QTV=OFF \
+        -D FTE_TOOL_IQM=OFF \
+        -D FTE_TOOL_IMAGE=OFF \
+        -D FTE_TOOL_MASTER=OFF \
+        -D FTE_TOOL_QCC=OFF \
+        -D FTE_PLUG_ODE=OFF \
+        -D FTE_PLUG_HL2=OFF \
+        -D FTE_PLUG_COD=OFF \
+        -D FTE_PLUG_BULLET=OFF \
+        -D FTE_PLUG_QI=OFF \
+        -D FTE_PLUG_EZHUD=OFF \
+        -D FTE_PLUG_IRC=OFF \
+        -D FTE_PLUG_MODELS=OFF \
+        -D FTE_PLUG_XMPP=OFF \
+        -D FTE_PLUG_QUAKE3=OFF \
+        -D FTE_MENU_SYS=OFF \
+        -D FTE_CSADDON=OFF \
+        -G Ninja
+6. finally run the following to compile
 cmake --build build
 
 Right, urm, now what?

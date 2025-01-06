@@ -5,7 +5,7 @@ Wii compile guide
 2. Run sudo (dkp)-pacman --needed -S wii-cmake wii-portlibs ppc-portlibs /
 3. Install ninja trough your system package manager 
 4. install https://github.com/AndrewPiroli/wii-curl 
-5. run
+5. Run the command below
 cmake \
 -B build \
 -S . \
@@ -30,7 +30,7 @@ cmake \
 -D FTE_MENU_SYS=OFF \
 -D FTE_CSADDON=OFF \
 -G Ninja
-then run the following to compile
+6. then run the following to compile
 cmake --build build
 
 Right, urm, now what?

@@ -46,7 +46,7 @@ typedef struct
 	} soups[64];
 	size_t numsoups;
 } cluttersector_t;
-static cluttersector_t cluttersector[3*3*3];
+static cluttersector_t cluttersector[2*2*2];
 cvar_t r_clutter_density		= CVARD("r_clutter_density", "0", "Scaler for clutter counts. 0 disables clutter completely.\nClutter requires shaders with 'fte_clutter MODEL SPACING SCALEMIN SCALEMAX ZOFS ANGLEMIN ANGLEMAX' terms");
 cvar_t r_clutter_distance		= CVARD("r_clutter_distance", "1024", "Distance at which clutter will become invisible.");	//should be used by various shaders to fade it out by here
 void R_Clutter_Init(void)

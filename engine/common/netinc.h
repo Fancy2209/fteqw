@@ -123,7 +123,9 @@
 	#include <netinet/tcp.h>
 	#include <netdb.h>
 	#include <sys/ioctl.h>
+	#ifndef __wii__
 	#include <sys/uio.h>
+	#endif
 	#include <arpa/inet.h>
 	#include <errno.h>
 

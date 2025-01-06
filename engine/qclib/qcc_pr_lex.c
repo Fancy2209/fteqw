@@ -3269,6 +3269,8 @@ static char *QCC_PR_PopenMacro(const char *macroname, const char *cmd, char *ret
 	char temp[65536], *t = temp;
 #ifdef _WIN32
 	FILE *f = _popen(cmd, "rt");
+#elif defined (__wii__)
+	FILE *f = NULL;
 #else
 	FILE *f = popen(cmd, "r");
 #endif
@@ -3310,6 +3312,7 @@ static char *QCC_PR_PopenMacro(const char *macroname, const char *cmd, char *ret
 	*retbuf++ = 0;
 #ifdef _WIN32
 	_pclose(f);
+#elif defined (__wii__)
 #else
 	pclose(f);
 #endif

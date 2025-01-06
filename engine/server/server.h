@@ -776,8 +776,11 @@ typedef struct client_s
 
 //mvd stuff
 #ifdef MVD_RECORDING
+#ifndef __wii__
 #define	MSG_BUF_SIZE 8192
-
+#else
+#define MSG_BUF_SIZE 1024
+#endif
 typedef struct
 {
 	vec3_t	origin;

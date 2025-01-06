@@ -1706,11 +1706,15 @@ void GLBE_Init(void)
 
 //end tables
 
+#ifndef __wii__
 #define MAX_ARRAY_VERTS 65536
+#else
+#define MAX_ARRAY_VERTS 8192
+#endif
 static vecV_t		vertexarray[MAX_ARRAY_VERTS];
 #if 1//ndef GLSLONLY
 static avec4_t		coloursarray[MAX_ARRAY_VERTS];
-#ifdef FTE_TARGET_WEB
+#if defined (FTE_TARGET_WEB) || defined (__wii__)
 static float		texcoordarray[1][MAX_ARRAY_VERTS*2];
 #else
 static float		texcoordarray[SHADER_PASS_MAX][MAX_ARRAY_VERTS*2];

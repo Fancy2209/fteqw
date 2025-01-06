@@ -328,6 +328,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #endif
 
+//=============================================================== CYGWIN ===
+
 #ifdef __CYGWIN__
 #define OS_STRING "cygwin"
 #define ID_INLINE static inline
@@ -341,6 +343,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #endif
 
+//=============================================================== MSDOS ===
+
 #ifdef __DJGPP__
 #define OS_STRING "msdos"
 #define ID_INLINE static inline
@@ -353,6 +357,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define DLL_EXT ".dll"
 #endif
 
+//=============================================================== WEB ===
 
 #ifdef FTE_TARGET_WEB
 #define OS_STRING "emscripten"
@@ -365,6 +370,21 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define DLL_EXT ".so"
 #endif
+
+//=============================================================== WII ===
+
+#ifdef __wii__
+#define OS_STRING "wii"
+#define ID_INLINE static inline
+#define PATH_SEP '/'
+
+#define ARCH_STRING "ppc"
+
+#define Q3_BIG_ENDIAN
+
+#define DLL_EXT ".REL" // Would be right if dynamic linking was supported
+#endif
+
 
 //================================================================== Q3VM ===
 

@@ -403,6 +403,8 @@ qboolean Sys_rmdir (const char *path)
 	int ret;
 #if WIN32
 	ret = _rmdir (path);
+#elif defined (__wii__)
+ret = 0;
 #else
 	ret = rmdir (path);
 #endif
@@ -660,7 +662,7 @@ int Sys_EnumerateFiles (const char *gpath, const char *match, int (QDECL *func)(
 	strcat(fullmatch, match);
 	return Sys_EnumerateFiles2(fullmatch, start, start, func, parm, spath);
 }
-#elif defined(linux) || defined(__unix__) || defined(__MACH__) || defined(__HAIKU__)
+#elif defined(linux) || defined(__unix__) || defined(__MACH__) || defined(__HAIKU__) || defined (__wii__)
 #include <dirent.h>
 #include <errno.h>
 static int Sys_EnumerateFiles2 (const char *truepath, int apathofs, const char *match, int (*func)(const char *, qofs_t, time_t modtime, void *, searchpathfuncs_t *), void *parm, searchpathfuncs_t *spath)
@@ -1091,7 +1093,7 @@ int QDECL main(int argc, char **argv)
 #endif
 
 #if !defined(WIN32)
-	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) | O_NDELAY);
+	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) | O_NONBLOCK);
 #endif
 
 	COM_InitArgv (parms.argc, parms.argv);

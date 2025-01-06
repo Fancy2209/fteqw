@@ -41,6 +41,19 @@ ftemaster provides a broker service
 #include "quakedef.h"
 #include "netinc.h"
 
+#ifdef __wii__
+#define	IP_ADD_MEMBERSHIP	12   /* ip_mreq; add an IP group membership */
+#define	IP_DROP_MEMBERSHIP	13   /* ip_mreq; drop an IP group membership */
+
+/*
+ * Argument structure for IP_ADD_MEMBERSHIP and IP_DROP_MEMBERSHIP.
+ */
+struct ip_mreq {
+	struct	in_addr imr_multiaddr;	/* IP multicast address of group */
+	struct	in_addr imr_interface;	/* local IP address of interface */
+};
+#endif
+
 typedef struct
 {
 	unsigned short msgtype;

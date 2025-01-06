@@ -278,7 +278,7 @@ IF(CMAKE_C_COMPILER_ID MATCHES "GNU")
 #	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wswitch-enum")					#to warn about omitted enums despite default.
 
 	#might as well do this, public builds use the regular Makefile.
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=native")
+	#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=native")
 	IF(CMAKE_BUILD_TYPE MATCHES "Debug")
 		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall ${FTE_WERROR_} -Wno-pointer-sign -Wno-unknown-pragmas -Wno-format-zero-length -Wno-strict-aliasing -Wno-error=cpp")
 	ELSE()
@@ -346,7 +346,7 @@ IF(${ANDROID})
 
 #	INCLUDE_DIRECTORIES(	${FREETYPE_INCLUDE_DIRS} )
 
-	SET(FTE_DEFINES ${FTE_DEFINES};ANDROID;VKQUAKE;MULTITHREAD)
+	SET(FTE_DEFINES ${FTE_DEFINES};ANDROID;VKQUAKE)
 	SET(FTE_LIBS ${FTE_LIBS} android log EGL ${SYS_LIBS} ${CMAKE_DL_LIBS})
 	SET(FTE_ARCH_FILES
 		engine/client/sys_droid.c
@@ -432,8 +432,8 @@ ELSEIF(UNIX AND NOT FTE_USE_SDL)	#linux(ish)
 		SET(FTE_LIB_DEFINES ${FTE_LIB_DEFINES};NO_X11)
 	ENDIF()
 
-	SET(FTE_DEFINES ${FTE_DEFINES};DYNAMIC_SDL;MULTITHREAD)
-	SET(FTE_LIBS ${FTE_LIBS} ${SYS_LIBS} ${CMAKE_DL_LIBS} pthread ${SDL2_LIBRARIES})
+	SET(FTE_DEFINES ${FTE_DEFINES};DYNAMIC_SDL)
+	SET(FTE_LIBS ${FTE_LIBS} ${SYS_LIBS}  ${SDL2_LIBRARIES})
 	SET(FTE_ARCH_FILES ${FTE_ARCH_FILES}
 		engine/client/sys_linux.c
 		engine/common/sys_linux_threads.c
@@ -515,8 +515,8 @@ ELSEIF(1)	#SDL
 	INCLUDE_DIRECTORIES(${FREETYPE_INCLUDE_DIRS} ${SDL2_INCLUDE_DIRS})
 	
 	#SDL2.0.7 supports vulkan, so lets use it.
-	SET(FTE_DEFINES ${FTE_DEFINES};FTE_SDL;MULTITHREAD)
-	SET(FTE_LIBS ${FTE_LIBS} ${SYS_LIBS} ${CMAKE_DL_LIBS} ${SDL2_LIBRARIES})
+	SET(FTE_DEFINES ${FTE_DEFINES};FTE_SDL)
+	SET(FTE_LIBS ${FTE_LIBS} ${SYS_LIBS} ${SDL2_LIBRARIES} wiisocket opengx glu)
 	SET(FTE_ARCH_FILES
 		engine/client/sys_sdl.c
 		engine/client/snd_al.c
@@ -1001,7 +1001,7 @@ ELSE()
 ENDIF()
 
 #ODE Physics library plugin
-SET(FTE_PLUG_ODE true CACHE BOOL "Compile ODE rigid body physics plugin.")
+SET(FTE_PLUG_ODE off CACHE BOOL "Compile ODE rigid body physics plugin.")
 SET_PROPERTY(CACHE FTE_PLUG_ODE PROPERTY STRINGS false true static)
 IF(FTE_PLUG_ODE)
 	FIND_PATH(LIBODE_INCLUDE_DIR ode/ode.h)
@@ -1059,6 +1059,8 @@ ELSE()
 		SET_TARGET_PROPERTIES(fteqw PROPERTIES COMPILE_DEFINITIONS "${FTE_LIB_DEFINES};${FTE_DEFINES};${FTE_REVISON}")
 		TARGET_INCLUDE_DIRECTORIES(fteqw PUBLIC ${FTE_INCLUDES})
 		TARGET_LINK_LIBRARIES(fteqw ${FTE_LIBS})
+		#target_compile_options(fteqw PRIVATE -ffunction-sections -fdata-sections)
+		#target_link_options(fteqw PRIVATE -Wl,--Map,output.map -Wl,--gc-sections -Wl,--strip-all)
 		SET(INSTALLTARGS ${INSTALLTARGS} fteqw)
 
 		ADD_CUSTOM_TARGET(fteqw-i18n ALL
@@ -1117,7 +1119,7 @@ ELSE()
 			iqm/iqm.h
 		)
 		SET_TARGET_PROPERTIES(iqmtool PROPERTIES COMPILE_DEFINITIONS "IQMTOOL;${DRACO_CFLAGS};${FTE_LIB_DEFINES};${FTE_REVISON}")
-		TARGET_LINK_LIBRARIES(iqmtool ${CMAKE_DL_LIBS} ${DRACO_LIBRARY} ${JPEG_LIBRARIES} ${PNG_LIBRARIES})
+		TARGET_LINK_LIBRARIES(iqmtool ${DRACO_LIBRARY} ${JPEG_LIBRARIES} ${PNG_LIBRARIES})
 		SET(INSTALLTARGS ${INSTALLTARGS} iqmtool)
 	ENDIF()
 
@@ -1460,7 +1462,7 @@ IF(FTE_PLUG_HL2)
 		plugins/hl2/mod_vbsp.c
 		plugins/hl2/mat_vmt.c
 	)
-	SET_TARGET_PROPERTIES(plug_hl2 PROPERTIES COMPILE_DEFINITIONS "FTEPLUGIN;MULTITHREAD;${FTE_LIB_DEFINES}")
+	SET_TARGET_PROPERTIES(plug_hl2 PROPERTIES COMPILE_DEFINITIONS "FTEPLUGIN;${FTE_LIB_DEFINES}")
 	TARGET_LINK_LIBRARIES(plug_hl2 ${SYS_LIBS})
 
 	EMBED_PLUGIN_META(hl2 "HalfLife2 Formats Plugin" "Adds support for reading various file formats used by HalfLife2. Requires mod support to be useful.")
